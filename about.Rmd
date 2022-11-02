@@ -1,0 +1,79 @@
+---
+title: "Resume"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{css, echo=FALSE}
+h3, h5 {
+  text-align: left;
+}
+```
+### Education
+##### **Columbia University**: Master of Public Health (2021-2023)
+* Department: Population and Family Health
+
+* Certificate: Applied Biostatistics and Health Data Science 
+
+##### **University of California Los Angeles (UCLA)**: Bachelor's of Science (2014-2018)
+* Major: Molecular, Cellular, and Developmental Biology
+
+<p>&nbsp;</p>
+### Honors and Awards
+UCLA- Chancellor's Service Award (2018)
+
+Urbanek Scholarship Award (2014–2018)
+<p>&nbsp;</p>
+### Technical Skills
+##### R, SAS, SQL, SPSS, Microsoft Office 
+<p>&nbsp;</p>
+### Work Experience
+
+#### **The Population Council- Girl Center** – Research Intern  
+June 2022– Present
+
+* Completed data extraction for 92 peer reviewed papers for a meta-analysis for a systematic review paper
+* Drafted a program evaluation research protocol for UNICEF
+* Drafted consent forms for study participants for minors and adults 
+* Created a qualitative survey to understand adolescent resilience in the program area 
+
+#### **La Clinica de la Raza** – Health Educator 
+Aug 2019– May 2021
+
+* Conducted individual health education appointments with adolescent patients to educate them on contraceptives, safe sex, and nutrition in collaboration with a medical provider 
+* Lead a peer health education group composed of 20 high school students 
+* Assisted in data collection and data reporting for program evaluation 
+* Charted patient notes into EPIC and NextGen EHR systems 
+
+#### **UT Southwestern Medical Center** – Research Volunteer
+Jan 2020 - May 2021
+
+* Created and cleaned a data set composed of data from the top 25 hospitalist programs in the U.S and conducted a cross-sectional study to describe the state of promotion in hospital medicine. 
+*	Assisted in statistical analyses using univariate and multivariate logistic regressions using SAS 
+*	Resulted in a [Journal of Hospital Medicine Publication](https://shmpublications.onlinelibrary.wiley.com/doi/10.1002/jhm.12894).
+
+#### **UCLA- Easton Center For Alzheimer's Research** – Clinical Research Intern
+January 2017 – March 2018
+
+*	Contacted and pre-screened potential research participants and enrolled them into various interventional and observational clinical trials 
+*	Maintained patient database and performed data cleaning on study datasets  
+*	Managed distribution and collection of participant data in secure databases and maintained IRB protocols 
+<p>&nbsp;</p>
+
+### Volunteer Activities
+
+* Volunteer at Reading to Kids – helped to build literacy for at-risk youth at make-up school. 
+* Patient Health Advocate for SCOPE – Provided resources to low-income patients at UCLA Hospital. Built a database for patient resources split by area and type of resource. 
+* Associate at Fellowship for International Service and Health (FISH)- ran bi-weekly free medical clinics for a marginalized community in Tijuana, Mexico 
+* Homeless Outreach - coordinated volunteer activities and donations to feed unhoused individuals in Santa Monica
+<p>&nbsp;</p>
+
+### Leadership
+
+* Finance Coordinator for SCOPE - raised $50,000 in grants and managed 300 members (2017 - 2018)
+
+<p>&nbsp;</p>
+Click [here](index.html) to return to the home page
+

@@ -1,0 +1,17 @@
+---
+title: "Mindy Tran"
+output: 
+  html_document:
+    toc: false
+    toc_float: true
+---
+
+<p align="left">
+<img src="images/headshot.png" style="width:30%">
+</p>
+
+<p align="left">
+Hello! My name is Mindy. I am currently pursuing my Masters of Public Health at the Columbia Mailman School of Public Health with a concentration in Population and Family Health and a certificate in Applied Biostatistics and Health Data Science. In addition, I have a degree in Molecular, Cellular, and Developmental Biology from UCLA. I aspire to use the power of data and my enthusiasm for biology to solve complex problems in healthcare and biopharmaceuticals to improve access to healthcare. To learn more about my professional and academic experiences, click [here](about.html)
+</p>
+
+
