@@ -14,45 +14,69 @@ library(plotly)
 ```
 
 ```{r data}
-data(rest_inspec) 
+data("rest_inspec") 
 ```
 
 ```{r filter}
-rest_df = rest_inspec %>% 
-  select(boro, cuisine_description, score, dba, inspection_date, grade, zipcode) %>% 
+inspection_df = rest_inspec %>% 
+  select(boro, cuisine_description, score, dba, grade, inspection_date) %>% 
   drop_na(score) %>% 
-  drop_na(grade) %>%
   filter(boro != "Missing") %>% 
   mutate(cuisine_description = ifelse(as.character(cuisine_description) == "Latin (Cuban, Dominican, Puerto Rican, South & Central American)", "Latin", as.character(cuisine_description)))
 ```
 
 Column {data-width=650}
 -----------------------------------------------------------------------
+
+### Chart 1
+
 ```{r plot1}
-rest_df %>% 
-  filter(boro == "QUEENS") %>%
-  count(cuisine_description) %>%
-  top_n(5, n) %>% 
-  mutate(cuisine_description = fct_reorder(cuisine_description, n)) %>% 
-  plot_ly(x = ~cuisine_description, y = ~n, color = ~cuisine_description, type = "bar", colors = "viridis") %>%
-  layout(
-    title = "5 Most Common Cuisine Types in Queens",
-    xaxis = list(title = "Cuisine Types"),
-    yaxis = list(title = "Number of Restaraunts")
+inspection_df %>% 
+  mutate(boro = fct_reorder(boro, score)) %>% 
+  plot_ly(y = ~score, color = ~boro, type = "box", colors = "viridis") %>% 
+    layout(
+    title = "Distribution of Restaraunt Scores by New York Borough",
+    xaxis = list(title = "Borough"),
+    yaxis = list(title = "Scores")
   )
 ```
 
 Column {data-width=350}
 -----------------------------------------------------------------------
+
+### Chart 2
+
 ```{r plot2}
-rest_df %>% 
-  mutate(boro = fct_reorder(boro, score)) %>% 
-  plot_ly(y = ~score, color = ~boro, type = "box", colors = "viridis") %>% 
-    layout(
-    title = "Restaurant Inspection Score by New York Borough",
-    xaxis = list(title = "Borough"),
-    yaxis = list(title = "Restuarant Inspection Scores")
+mrg <- list(l = 10, r = 10,
+          b = 10, t = 50,
+          pad = 20)
+inspection_df %>% 
+  filter(boro == "MANHATTAN") %>%
+  count(cuisine_description) %>%
+  top_n(8, n) %>% 
+  mutate(cuisine_description = fct_reorder(cuisine_description, n)) %>% 
+  plot_ly(x = ~cuisine_description, y = ~n, color = ~cuisine_description, type = "bar", colors = "viridis") %>%
+  layout(
+    title = "Top 8 Most Common Cuisine \nTypes in Manhattan Restaraunts",
+    xaxis = list(title = "Cuisine Types"),
+    yaxis = list(title = "Total Restaraunts"),
+    margin = mrg
   )
 ```
 
+### Chart 3
+
+```{r plot3}
+inspection_df %>%
+  sample_n(1000) %>% 
+  filter(grade == "A" | grade == "B" | grade == "C") %>%
+  mutate(text_label = str_c("Restaraunt: ", dba, "\nGrade: ", grade)) %>% 
+  plot_ly(
+    x = ~inspection_date, y = ~score, type = "scatter", mode = "markers", color = ~boro, colors = "viridis", text = ~text_label, alpha = 0.5) %>% 
+  layout(
+    title = "Trends in NYC Restaraunt Scores Over Time",
+    xaxis = list(title = "Date"),
+    yaxis = list(title = "Restaraunt Score")
+  )
+```
 
