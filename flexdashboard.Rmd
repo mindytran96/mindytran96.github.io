@@ -1,0 +1,58 @@
+---
+title: "Dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(p8105.datasets)
+library(plotly)
+```
+
+```{r data}
+data(rest_inspec) 
+```
+
+```{r filter}
+rest_df = rest_inspec %>% 
+  select(boro, cuisine_description, score, dba, inspection_date, grade, zipcode) %>% 
+  drop_na(score) %>% 
+  drop_na(grade) %>%
+  filter(boro != "Missing") %>% 
+  mutate(cuisine_description = ifelse(as.character(cuisine_description) == "Latin (Cuban, Dominican, Puerto Rican, South & Central American)", "Latin", as.character(cuisine_description)))
+```
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+```{r plot1}
+rest_df %>% 
+  filter(boro == "QUEENS") %>%
+  count(cuisine_description) %>%
+  top_n(5, n) %>% 
+  mutate(cuisine_description = fct_reorder(cuisine_description, n)) %>% 
+  plot_ly(x = ~cuisine_description, y = ~n, color = ~cuisine_description, type = "bar", colors = "viridis") %>%
+  layout(
+    title = "5 Most Common Cuisine Types in Queens",
+    xaxis = list(title = "Cuisine Types"),
+    yaxis = list(title = "Number of Restaraunts")
+  )
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+```{r plot2}
+rest_df %>% 
+  mutate(boro = fct_reorder(boro, score)) %>% 
+  plot_ly(y = ~score, color = ~boro, type = "box", colors = "viridis") %>% 
+    layout(
+    title = "Restaurant Inspection Score by New York Borough",
+    xaxis = list(title = "Borough"),
+    yaxis = list(title = "Restuarant Inspection Scores")
+  )
+```
+
+
