@@ -28,9 +28,32 @@ inspection_df = rest_inspec %>%
 Column {data-width=650}
 -----------------------------------------------------------------------
 
-### Chart 1
+### Chart A
 
-```{r plot1}
+```{r}
+mrg <- list(l = 10, r = 10,
+          b = 10, t = 50,
+          pad = 20)
+inspection_df %>% 
+  filter(boro == "QUEENS") %>%
+  count(cuisine_description) %>%
+  top_n(3, n) %>% 
+  mutate(cuisine_description = fct_reorder(cuisine_description, n)) %>% 
+  plot_ly(x = ~cuisine_description, y = ~n, color = ~cuisine_description, type = "bar", colors = "viridis") %>%
+  layout(
+    title = "Top 5 Most Common Cuisines in Queens ",
+    xaxis = list(title = "Cuisine Types"),
+    yaxis = list(title = "Total Restaraunts"),
+    margin = mrg
+  )
+```
+
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Chart B
+```{r}
 inspection_df %>% 
   mutate(boro = fct_reorder(boro, score)) %>% 
   plot_ly(y = ~score, color = ~boro, type = "box", colors = "viridis") %>% 
@@ -41,40 +64,18 @@ inspection_df %>%
   )
 ```
 
-Column {data-width=350}
------------------------------------------------------------------------
 
-### Chart 2
+### Chart C
 
-```{r plot2}
-mrg <- list(l = 10, r = 10,
-          b = 10, t = 50,
-          pad = 20)
-inspection_df %>% 
-  filter(boro == "MANHATTAN") %>%
-  count(cuisine_description) %>%
-  top_n(8, n) %>% 
-  mutate(cuisine_description = fct_reorder(cuisine_description, n)) %>% 
-  plot_ly(x = ~cuisine_description, y = ~n, color = ~cuisine_description, type = "bar", colors = "viridis") %>%
-  layout(
-    title = "Top 8 Most Common Cuisine \nTypes in Manhattan Restaraunts",
-    xaxis = list(title = "Cuisine Types"),
-    yaxis = list(title = "Total Restaraunts"),
-    margin = mrg
-  )
-```
-
-### Chart 3
-
-```{r plot3}
+```{r}
 inspection_df %>%
   sample_n(1000) %>% 
   filter(grade == "A" | grade == "B" | grade == "C") %>%
   mutate(text_label = str_c("Restaraunt: ", dba, "\nGrade: ", grade)) %>% 
   plot_ly(
-    x = ~inspection_date, y = ~score, type = "scatter", mode = "markers", color = ~boro, colors = "viridis", text = ~text_label, alpha = 0.5) %>% 
+    x = ~inspection_date, y = ~score, type = "scatter", mode = "markers", color = ~boro, colors = "viridis", text = ~text_label, alpha = 0.75) %>% 
   layout(
-    title = "Trends in NYC Restaraunt Scores Over Time",
+    title = "Changes NYC Restaraunt Scores from 2014-2018",
     xaxis = list(title = "Date"),
     yaxis = list(title = "Restaraunt Score")
   )

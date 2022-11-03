@@ -1,0 +1,84 @@
+---
+title: "Dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+    source_code: embed
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(p8105.datasets)
+library(plotly)
+```
+
+```{r data}
+data("rest_inspec") 
+```
+
+```{r filter}
+inspection_df = rest_inspec %>% 
+  select(boro, cuisine_description, score, dba, grade, inspection_date) %>% 
+  drop_na(score) %>% 
+  filter(boro != "Missing") %>% 
+  mutate(cuisine_description = ifelse(as.character(cuisine_description) == "Latin (Cuban, Dominican, Puerto Rican, South & Central American)", "Latin", as.character(cuisine_description)))
+```
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Chart A
+
+```{r}
+mrg <- list(l = 10, r = 10,
+          b = 10, t = 50,
+          pad = 20)
+inspection_df %>% 
+  filter(boro == "QUEENS") %>%
+  count(cuisine_description) %>%
+  top_n(3, n) %>% 
+  mutate(cuisine_description = fct_reorder(cuisine_description, n)) %>% 
+  plot_ly(x = ~cuisine_description, y = ~n, color = ~cuisine_description, type = "bar", colors = "viridis") %>%
+  layout(
+    title = "Top 5 Most Common Cuisines in Queens ",
+    xaxis = list(title = "Cuisine Types"),
+    yaxis = list(title = "Total Restaraunts"),
+    margin = mrg
+  )
+```
+
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Chart B
+```{r}
+inspection_df %>% 
+  mutate(boro = fct_reorder(boro, score)) %>% 
+  plot_ly(y = ~score, color = ~boro, type = "box", colors = "viridis") %>% 
+    layout(
+    title = "Distribution of Restaraunt Scores by New York Borough",
+    xaxis = list(title = "Borough"),
+    yaxis = list(title = "Scores")
+  )
+```
+
+
+### Chart C
+
+```{r}
+inspection_df %>%
+  sample_n(1000) %>% 
+  filter(grade == "A" | grade == "B" | grade == "C") %>%
+  mutate(text_label = str_c("Restaraunt: ", dba, "\nGrade: ", grade)) %>% 
+  plot_ly(
+    x = ~inspection_date, y = ~score, type = "scatter", mode = "markers", color = ~boro, colors = "viridis", text = ~text_label, alpha = 0.75) %>% 
+  layout(
+    title = "Changes NYC Restaraunt Scores from 2014-2018",
+    xaxis = list(title = "Date"),
+    yaxis = list(title = "Restaraunt Score")
+  )
+```
+
